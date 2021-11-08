@@ -4,7 +4,7 @@ export const sendServerRequest = (page, keyword) => {
   // const API_KEY = "23803222-9b3ffdbc29f05e2c5cc8bf419";
 
   const baseUrl2 = "https://newsapi.org/v2/everything";
-  const API_KEY_V2 = "420434f168d84e3c954361c4f64a1828";
+  const API_KEY_V2 = "9dcbaaa9d7d54c17af8369a0d4acc852";
 
   return fetch(
     // PIXABAY REQUEST
