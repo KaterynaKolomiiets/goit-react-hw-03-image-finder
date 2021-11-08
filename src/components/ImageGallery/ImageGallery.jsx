@@ -4,7 +4,6 @@ import ImageGalleryItem from "./ImageGalleryItem";
 import s from "./ImageGallery.module.css";
 
 const ImageGallery = ({ props, onClick }) => {
-
   return (
     <ul className={s.imageGallery}>
       {props &&

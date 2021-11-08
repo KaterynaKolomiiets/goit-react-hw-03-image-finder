@@ -38,9 +38,16 @@ class App extends Component {
       this.state.page !== prevState.page ||
       this.state.userQuery !== prevState.userQuery
     ) {
+      this.setState({isLoading:true})
       sendServerRequest(this.state.page, this.state.userQuery)
         .then((result) => result.json())
         .then((res) => {
+          if (!res.articles) {
+            alert("No articles left!")
+            return
+          }
+          else {
+            
           if (this.state.page === 1) {
             this.setState({ articles: res.articles });
           } else {
@@ -52,6 +59,7 @@ class App extends Component {
               behavior: "smooth",
             });
           }
+          }
         })
         .catch((error) => this.setState({ error }))
         .finally(() => this.setState({ isLoading: false }));
@@ -59,7 +67,7 @@ class App extends Component {
   }
 
   handleFormSubmit = ({ userQuery }) => {
-    this.setState({ userQuery: userQuery, isLoading: true });
+    this.setState({ userQuery: userQuery });
   };
 
   changePage = () => {
@@ -72,17 +80,10 @@ class App extends Component {
     return (
       <div className={s.app}>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {this.state.isLoading ? (
-          <Loader className={s.loader} />
-        ) : (
-          <ImageGallery
-            props={this.state.articles}
-            onClick={this.toggleModal}
-          />
-        )}
-        {Object.keys(this.state.articles).length > 0 && (
-          <Button onClick={this.changePage} />
-        )}
+        {this.state.isLoading && <Loader type="Bars" color="orangered" className={s.loader} />}
+        <ImageGallery props={this.state.articles} onClick={this.toggleModal} />
+
+        {this.state.articles.length > 0 && <Button onClick={this.changePage} />}
         {this.state.showModal && (
           <Modal src={this.state.src} onClose={this.toggleModal} />
         )}
